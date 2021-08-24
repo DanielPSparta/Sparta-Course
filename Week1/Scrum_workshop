@@ -1,0 +1,59 @@
+# Scrum Workshop
+Scrum Workshop
+Requirement gathering:
+The requirements are a group of task or conditions to finish / complete the task. Overall needs for completing the project. To gather these you will need to ask questions towards stake holders and project lead. Document all the findings and share with the rest of the team.
+User Stories:
+As a <type of user>, I want <goal> so that <reason>
+User stories do not include all the details – they are only a pointer to the real requirement
+e.g
+As a user, I want to create and account so that I can access the website.
+This is not the technical of how to do this just what you want the user to do. Promise of a future conversation.
+Anyone can write a user story. The three amigos approach, test, development, and product. Three different disciplines come together to make user stories. (tester, developer, product owner/customer).
+Write the test before the app. This means that you know the outcome needed for the app TDD (test driven development).
+Writing good user stories:
+-	Understandable(by normal people)
+-	As a … I want … So that …
+-	Independent (not rely on other user stories)
+-	Negotiable
+-	Valuable (should give value to the final product)
+-	Estimable ( how much time and resources needed)
+-	Small ( if too large it should be an EPIC and broken into severalal user stories)
+-	Testable ( if you cannot write a test scenario it is too big and should be split)
+INVEST ( the bullet points above)
+To write good ones start with the EPIC then split them up and refine them. Add acceptance criteria, what do you expect to happen when software is in use.
+THE THREE C’s:
+-	Card (write card)
+-	Conversation (have conversation on the card)
+-	Confirmation (have confirmation on what we are going to do)
+Estimation and Prioritising
+How to decide cost for a task and the priority in which to do them.
+Product and the sprint back log. The product backlog is a list of everything that we need to do in the product. It is essentially a list of use stories. The sprint backlog is taken from the product backlog for task to do in the sprint, they change the user stories from the product backlog to tasks in the sprint backlog to complete. Any new task that has been found in the sprint will be placed into the product backlog. (tasks and user stories are interchangeable they are essentially the same thing)
+Estimated effort, AGILE teams estimate the effort required to complete the task, can be the time needed to complete or number of developers required to complete it. Or even “story points” – an abstract measure of effort needed to complete this requirement.  ( a good measure is man hour required to complete the task) or even taking a pole of difficulty of the task.
+One technique is planning poker:
+1.	Decide on a scale – for example 1-5 – representing least to most effort
+2.	Issue planning poker cards to each team member each card has a single number on it 1-5
+3.	The team discuses the effort of completing a task before revealing cards at the same time
+4.	If there is a big difference of values revealed, the team discusses the reasoning behind the smallest and the largest values then has another round until a consensus is reached.
+Definition of ready:
+List of things that are required to be completed before you can start (software developing) developing user story. (this is relating for a specific story using the INVEST acronym, then your story is ready)
+Definition of Done:
+When the checklist of all required task are done. Or when the definition of done for the product is reached.
+Wireframes
+A blue print or visual guide of how the website or interface looks like. Don’t include font colour or pictures.
+What should be included is:
+-	Clear layout
+-	Simple
+-	Essential things
+-	Concept KISS (keep it simple stupid)
+Or how they are connected
+Retrospective:
+-	Set the stage (how can we do better in the next sprint )
+-	Gather data
+-	Generate Insights ( find important items to understand the causes, effect solutions and improvements)
+-	Decide what to do
+-	Close the Retro
+Team Retro Board
+
+Emotion seismograph:
+Have 3 emotions, happy, sad, indifferent
+Mark on a board everyday how they are doing, this allows you to see how people are doing in a sprint.

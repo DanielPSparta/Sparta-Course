@@ -1,0 +1,10 @@
+Git commands for git bash
+git clone [link]   (gets online directory and downloads files)
+cd  directory    (change directory)
+dir (gives list of files)
+touch test.txt        (adds file)
+git add test.txt              adds file to local repository
+git commit -m”added test.txt to be pushed to remote”   (-m is the message to add)
+git push   (pushes to online git)
+atom (loads atom)
+atom [name of repository]     (opens up the repository in atom)

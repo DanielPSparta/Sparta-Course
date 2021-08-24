@@ -1,0 +1,166 @@
+Virtualisation
+Virtualisation is the process of creating a software from a hardware
+A virtual server means that the server doesn’t exist in a physical form, it exists in a virtual format.
+Hypervisor (also known as virtual machine monitor(VMM)) works as an interface between the VMs and the host. Layer between the software and the hardware.
+
+The idea is the os manages the hardware and software. How to share the hardware between different OS and at the same time how can you separate the OS from the hardware. In the 90’s and beginning of the 2000. The hardware server would have an OS installed most of the time Linux. The sever would have Linux installed and then have software installed on top of it. Severs are specialised to their functions. Different hardware have different drivers etc, this means different configs between servers for the same software. Meaning things will not work together.
+To resolve this you separate the hardware from the software using the virtualisation software. Then the OS is placed in a virtual machine to run on. The VM only sees the hypervisor. The other benefit is the ability to run different OS in the same system. The hypervisor will allocate the resources to the VMs.
+
+
+
+
+
+
+
+
+
+
+Virtualisation Types
+2 main types.
+
+
+Type 2 can have several other programmes running on the same OS side by side with the hypervisor. Easy to install for a user. It’s simple to do but the performance is limited due to the resources allocated to other applications. It is also less secure due to a higher threat surface. So OS security, Hypervisor security, then the various applications etc.
+
+type 1 more secure, lower threat surface. High performance. Less tasks can be performed, so limited tasks can be done. More complicated to use.
+In virtualisation VM do not have access to each other, they have separate memory etc. The security comes from if the VM can escape their confines and infect other VMs or the hypervisor.
+Host and guest OS can be different.
+
+
+Don’t allocate too much memory this is sectioned of from your pc for sole use in the vm
+
+Virtual hard disk allocation
+VDI for use by itself
+VHD for use with other hypervisor use this
+
+Dynamically allocated – can have 40 gigs max but the file size is as much as you have saved. Will notbe reserved on hard disk
+Fixed size – reserve storage space meaning the file itself will be 10 gig even if there is only 1 gig of data in it
+Once created load in the iso file, it is an exact image of an os, this is done by right clicking on you vm os going to settings then to storage then to controller ide. And then load in the files.
+In the systems tab in settings you can allocate processor cores
+Any encryption happens on the virtual hard disk
+
+Deleting a file will only delete the pointer to the file, the space of the file is up for grabs. This is why you can get back deleted files.
+
+Ext 4 is the file system used by linux.
+Swap is used for the internal operation of linux
+
+Can take the vm folder or the os instance, and place on another system and it will work fine
+Can right click and eject the disk, since it is already installed
+
+
+
+
+
+
+
+
+
+LINUS OS
+
+
+3 main components
+Linus kernel – is the only part that accesses the hardware, this is all the drivers and libraries that are needed to communicate with the hardware
+The Shell – Only an interface between the user the user applications and the kernel itself. All applications are going through the shell to get to the kernel. The terminal is one type of the shell, there are several types of shells. On ubuntu it is default bash as well as dash. On kali it is zsh shell. The terminal is the interface to interact with the kernel through.
+
+A Linux distribution
+Each distribution has different set of apps customised for one purpose. Kali linux for example is customised for security practice. On ubuntu you will not find these tools, ubuntu is customised for normal user uses. Some distributions are based on other distros
+
+Centos is mainly used in servers.
+
+Linus file systems
+In linux it is ext4,ext3,btrfs,xfs
+Etx4 is the most used these days
+Windows file system starts with a letter(c,d,e)
+Linux works on the concept that everything starts at the root, they are partitioned file on the system
+Everything is a file, this means that when you are reading or writing data on a file then it is added on the hard disk. Linux considers that you always read and write like a file, so all drivers are either being read and being written to. Same as with RAM you read and write to it as well, therefore data exchange is standardised. So in code you go to the file you do not have to open an application, there is no difference like in windows where you have to open an application but you have to load in a file via ./file/. (instead of having to use an open command line)
+Commands and name of files are case sensitive
+Hidden files start with .
+Tree of the linus file system. Everything starts with a / in linux
+
+/bin is everything executable by the user
+/sbin is everything executable by the system
+/etc these are configuration files
+/dev is the device files they will all have a link to here I’e harddisc
+/proc processed information
+/var is the variable this is when application stores their variables
+/home all apps will have sub directory here
+/mnt this is used to make things readable
+
+Linux Shell
+This is the text interface to your computer / kernel
+Often referred to as : the command line, terminall, console, prompt
+Different ways to launch:
+1.	Activity/start then type shell or terminal
+2.	Ctrl alt t
+
+cd   (changes directory to base one)
+cd [directory name]   (changes to this name)
+pwd (print working directory )
+mkdir [name]  (makes a new directory called name)
+ls  (shows whats in the folder)
+ls -l   (makes a list of everything in the folder)
+ls -a  (list the hidden files that start with a .)
+ls -l -a (makes a list of hidden directories) (or ls -la)
+type [command]                  (gives what type of command you are using)
+which [command]           (gives what command you are using in its path)
+man [command]                                     (abbreviation of manual)( gives the help)
+touch      [name]-file                                  (creates a file with no content)
+cat [name]-file                   (shows what’s in the file )
+echo “[string]”                (echos whatever you write onto the screen
+echo “[string]” > test-file                (adds it to the test-file)   (this will always write on first line
+echo “[string]” >> test-file           (this will append to the file at the end)
+
+
+vi editor this allows you to edit a file
+vi test-file               (hard to use but power full apparently)
+nano test-file           (another editor easier to use)
+gedit test-file           (graphical editor very easy to use)(can’t use unless you have graphical interface on the system)
+
+in ls,
+. is the directory you are in
+.. is a pointer to the parent directory
+Therefore
+ls . (means you are browsing the directory you are in)
+ls ..  (browses the parent directory)
+
+
+The letters to the left of the directories and files in ls are the permissions you are allowed on the files/directories..
+First letter is if they are directory or not if so it starts with d
+Rwx refers to the user who is allowed to read, write and execute
+After that is the group, it is marked xr
+The others are after and they get marked x
+The number after the permissions refers to how many hardlink are there to the directory
+After that is the owner and the group,
+then the file size (this is in bytes), ls -lh ( makes the file size kilo bytes)(more useful to humans)
+lastly when the item was last modified
+
+How to change the mode of a file (the permissions)
+chmod       (changes permissions for a file)(is done in binary)
+
+user group others
+421 421 421            binary
+rwx rwx rwx              (this would be permission is allowed for everyone )
+7     7      7                  this needs to be in binary
+
+r-x  r-x   r-x
+5     5     5
+r-- --- ---
+4   0   0
+
+chmod [binary code] test-file         (changes permission for a file)
+chmod 777 test-file                        (all access to the file for everyone)
+
+chmod 777 cyber-directory/           (changes permission to a directory named cyber)
+chmod 777 -R cyber-directory/      (-R changes permissions for everything in the directory, sub directories and files, it stands for recursive)
+chown  [user name]    cyber-directory                     (changes the owner of the directory named cyber)
+
+the file system starts from the root, there are two things  / is the root system and the user
+i.e
+ls -l /           (gives a list of stuff in the root
+
+sudo  stands for super user do, this gives root privilege
+
+nano /etc/timezone    (try and modify the time zone it won’t work because it is in the root system you will get permission denied, since it is pwned by the root itself so you need root privilege)
+sudo nano /etc/timezone         (you are able to change it now because you have given yourself root privilege)
+
+-$ means you are in you home directory
+cd -      (takes you back to your home directory)
