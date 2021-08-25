@@ -1,0 +1,134 @@
+SCRIPTING IN LINUX
+IMPORTANT >> at the end of a function redirects the terminal output to a file e.g
+Apt install tree > ¬/tree.log  will place the terminal output in here instead. >> will append on the end of a file the terminal out put.
+
+$USER is the current user name variable
+ADDING USERS
+Only use the root to install, remove, configure. Avoid running things under the root. Because it is less secure and easier for hackers to access the root. If you run the applications and software under another account with no root privilege then only that account is compromised
+
+sudo adduser [webserver]                   (adds a new user named [])
+it then asks for your password as admin, then their password, then their room number, home telephone, then work phone, just press enter to leave blank. Then press y to confirm.
+The user will not have root privilege
+
+su [account name]                  (changes users) (su stands for switch user)
+passwd                      (changes password for current account) (need both old and new password)
+accounts with no root privilege will not be able to use root privilege
+sudo usermod -aG sudo [webserver]                                 (as an admin this adds the new account to the group sudo so it can have root privilege)             (usermod stands for user modification) (-aG add it to a group) (sudo is the group of users that can use the command sudo) ([webserver] is the account you want to add)
+sudo deluser [webserver] sudo                   (removes a user from a group, sudo in this case)
+
+To prevent a user from accessing the machine:
+passwd -s            (shows information about password of account)
+Account name      p means account normal        when the last time password was changed   minimum age for password         maximum age of password       warning days before password lost        time account has been inactive for
+
+sudo passwd -Sa                         (status of passwords for all accounts)
+sudo passwd -d [webserver]                (deletes the password of the account [webserver], this means they will not be able to log in)
+sudo deluser [webserver]                   (deletes the user named webserver)
+You may need to kill processes associated with the user, use ps -ef | grep [user], then find all processes and do sudo kill [process id] [process id] ….  -9       this will kill all the processes and then you can do sudo deluser [user]
+
+SCRIPTING
+We use bash for scripting in windows, now we will be using Linux shell scripting.
+In windows the file names have extensions i.e .txt .png
+In Linus the extensions are only for the applications, this means that they know which file to open with which application. The extension is necessary because it knows what to open it with, especially with third party application.
+Mostly we use the .sh in linux, to distinguish the shell script.
+nano script01.sh     (creates a script called script01.sh) and you can write in it)
+use
+chmod 770 script01.sh        (  to change the file to be executable readable and writable for the group and user but not others. )
+to excute the script do ./script01.sh         in the terminal
+do nano script01.sh             (to edit it again)
+variables work as
+name = “sparta”
+echo “ monkey man for me tbh at “ $name
+
+
+Operator	Description
+! EXPRESSION	The EXPRESSION is false.
+-n STRING	The length of STRING is greater than zero.
+-z STRING	The lengh of STRING is zero (ie it is empty).
+STRING1 = STRING2	STRING1 is equal to STRING2
+STRING1 != STRING2	STRING1 is not equal to STRING2
+INTEGER1 -eq INTEGER2	INTEGER1 is numerically equal to INTEGER2
+INTEGER1 -gt INTEGER2	INTEGER1 is numerically greater than INTEGER2
+INTEGER1 -lt INTEGER2	INTEGER1 is numerically less than INTEGER2
+-d FILE	FILE exists and is a directory.
+-e FILE	FILE exists.
+-r FILE	FILE exists and the read permission is granted.
+-s FILE	FILE exists and it's size is greater than zero (ie. it is not empty).
+-w FILE	FILE exists and the write permission is granted.
+-x FILE	FILE exists and the execute permission is granted.
+
+ If state ments
+if [(condition in here)]
+then
+	(code to execute)
+	exit (exits the script)
+fi                   (finishes the then statement)
+
+(runs rest of script)
+
+The condition markers are above.  Remember when using variables you can:
+read -p “please enter number” num1
+num1 is the new variable made to refer to it use $num1
+THIS LANGUAGE IS SPACE SENSITIVE I.E
+sum= $ (( $num1 + $num2 ))            works but if there is a space between sum and = it will not recognise any command
+
+Below is the multiops script transcribed from the vm
+read -p “Enter first number: “ first
+read -p “Enter second number: “ second        (assigns two number values as first and second)
+if [ $second -eq 0 ]
+then
+	echo “Cannot divide by zero, try again”         (this command write to screen)
+	exit      (exits the script)
+fi
+add=$(( $first + $second ))
+sub=$(( $first - $second ))
+mul=$(( $first * $second ))
+div=$(( $first / $second ))                      (doing all the calculations )
+echo “the addition of the two number: $add” >result-file    (makes the results file and adds to the first
+echo “the addition of the two number: $sub” >>result-file    (add to the next line of the file)
+echo “the addition of the two number: $mul” >>result-file
+echo “the addition of the two number: $div” >>result-file
+
+
+nano was used to create the script via
+nano multiops.sh
+and run using
+./multiops
+
+If the user has changed their prompt to some other format we need to try something else. The who command will give us the information we are looking for.
+who
+
+The output from who gives you the name of the current user, the terminal they are logged in at, the date and time when they logged in. If it is a remote session, it also tell us where they are logged in from.
+By comparison, the whoami command provides Just a name:
+whoami
+
+You can get the same one-word answer by echoing the $USER environment variable to the screen.
+echo $USER
+
+The one-letter command w requires less typing and provides more information.
+w
+
+The w command provides us with the user name which is what we wanted, and a bonus set of data for that user. Note that if there are multiple users logged into the Linux system, the w command will list them all. You’d need to know which terminal the user you were interested in had logged in on. If they’ve logged directly onto the Linux computer itself, that’ll be pts/o, so look for :0 in the output from w .
+The w command provides the boot time, uptime and average load for the previous five, ten and fifteen minutes, and the following information regarding the current user.
+•	USER: The user name.
+•	TTY: The type of terminal they are logged in at. This will usually be a pts (a pseudo-teletype). :0 means the physical keyboard and screen connected to this computer.
+•	FROM: The name of the remote host if this is a remote connection.
+•	LOGIN@: The time at which the user logged in.
+•	IDLE: Idle time. This shows ?xdm? in the screenshot because we’re running under an X-windows Display Manager, which does not provide that information.
+•	JCPU: Joint CPU time, this is the CPU time used by all processes that have been attached to this tty. In other words, the total CPU time of this user in this logged in session.
+•	PCPU: Process CPU time, this is the CPU time used by the current process. The current process is named in the WHAT column.
+•	WHAT: The command line of this user’s current process.
+Now that we know who this user is, we can obtain more information about them. The id command is a good place to start. Type id, a space, the name of the user and press enter.
+id dave
+
+ADVERTISEMENT
+
+This gives us their user ID (uid), group ID (gid) and the groups they’re a member of. A less cluttered display of the groups can be obtained by using the groups command.
+groups dave
+
+A nice summary is provided by the finger command. Use apt-get to install this package onto your system if you’re using Ubuntu or another Debian-based distribution. On other Linux distributions, use your Linux distribution’s package management tool instead.
+sudo apt-get install finger
+Once you have finger installed, you can use it to display some information about the user in question.
+finger dave
+
+On most Linux systems, some of these fields will be blank. The office, full name, and phone numbers are not populated by default. The “No Plan” field refers to an old scheme where you could provide a few notes for whoever was interested, about what you were working on, or planning to do. If you edit the .plan file in your home folder, the contents of that file are appended to the output from finger .
+To quickly reveal the name of the logged in user from the GNOME desktop used on Ubuntu and many other Linux distributions, click the system menu in the top-right corner of your screen. The bottom entry in the drop-down menu is the user name. Other Linux desktop environments should show your username in a similarly easy-to-find menu.

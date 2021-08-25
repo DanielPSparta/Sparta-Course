@@ -1,0 +1,79 @@
+Basics of the linux OS
+In the last set of notes we did file permissions.
+Now we are going to deal with user management.
+Usually several users run on the same machine. When we installed linux we only added one user.
+To get a list of user account on linus
+cat /etc/passwd                (notice there are many account)
+The other accounts have been added automatically.
+cat /etc/passwd | grep cyber               (filters for word cyber, only get the line with cyber in it)
+user:x:1000:1000:name:root
+(the x is a pointer to the passwords, the password is stored in another file)
+cat /etc/shadow                             (this is the file with the passwords in need root privavledge)
+sudo cat /etc/shadow                   (gets the passwords for the accounts, these are not in clear text)
+
+How to install packages
+You need to use a package manager, this is a tool used to upgrade, configure, move etc on Linux. Each distribution will have its own package manager. In Debian it is called apt (advanced package tool). You need advanced root privileges to run it though.
+
+sudo apt get- update           (will not update the system it will update the database of the packages on linux)
+
+sudo apt-get upgrade        (this will upgrade the packages from the database)
+I used
+
+Sudo apt update
+Sudo apt upgrade                 (You do not need to use the -get, only sometime you do)
+
+^ this will sometimes get an error message because the previous process hasn’t finished yet. May need to restart the terminal.
+
+ps  (gets the processes running on linux right now)
+ps -ef                (gets list of all processes working in addition to the file they are using)
+ppid parent process ID
+c (using shell or not
+stime (time to run it)
+
+sudo kill [process id]               (need sudo to kill a process)
+sudo kill [process id] -9                      (kills the process without informing it, ultimate kill)
+If you kill a parent id it will kill the children too
+
+sudo lsof [file name]                             (gives the process id, therefore easy to kill)
+lsof                                                  (gives a list of all files open in the system, some may have                permissions denied these are processes that are started by the root. Need root permission to access these)
+
+To copy in linux mark the wanted text with the mouse
+then press shift + insert
+the text will be pasted into the terminal
+
+HOW TO INSTALL AN APP
+sudo apt install [tree    ]                   (this will install tree)
+sudo apt install [tree] -y         (-y just means say yes to everything)
+sudo apt remove [tree       ]               (this will remove tree)
+
+TREE
+tree                                                (gives the content of the current folder as a tree, easier to see)
+tree apt                                        (gives all the levels in apt up to the files)
+whereis [tree  ]                          (gives the line of where the file is)
+
+
+history                                   (gives list of all commands used before)
+
+¬           represents the home directory
+| grep                              (filters based on a syntax)
+Ctrl r     (search in history)
+
+Sometimes you need to remove a package but completely.
+sudo apt remove  -- purge [tree]         (completely purges everything, sometimes somefiles will stay in the system this will rectify that, tree being the package in this case)
+
+LOGGING
+top                     (processes running on the system)  Shows cpu usage and memory usage and how long it has been up)        (ctrl c stops it)
+In windows you see them in the event viewer, in linux they will in different places but they will be in the same directory.
+
+location
+/var/log/auth.log            (keeps track of authorisation systems)
+-	daemon.log           background programs running
+-	debug                               debugging info
+-	kern.log                logs from kernel
+-	syslog                   info about system, if can’t find log you will probably it here
+-	log                          some applications create logs here
+
+cat /var/log/[log file]                       (outputs all log files in terminal)
+more /var/log/[log file]                     (read files page by page, it’s easier to see, pressing space will show next page, pressing enter will go line by line)  (to quit finish the file or press q)
+tail /var/log/[log file]                 (give last ten lines of the file)
+tail /var/log/[log file] -f                                 (keep reading what is being added to the file) (-f means follow)
