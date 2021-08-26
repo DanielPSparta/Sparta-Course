@@ -1,0 +1,170 @@
+Advanced virtualisation and containerisation
+
+-	Variation between the development and the production environment (differences between OS and software installed, hardware etc). This means people develop an app then send it over to the production team and it doesn’t work
+-	Development environment is where you develop the application
+-	Production environment is where you set the application up to provide the service(I.e run it on a server)
+-	They might have different OS, updates, plugins, etc
+-	The issue is more complicated when you add in the large size of the team and dozens of production environments
+-	One school of thought is to unify the production environments
+-	We will discuss two solutions: Vagrant (usually development environment) and Docker (usually production environment)
+
+Vagrant – concept and usage
+-	Tool used for building and managing virtual machine environments in a single workflow
+-	It is not a hypervisor (it’s just a tool)
+-	It lowers development environment setup time
+-	It mirrors production environment(s) on the developer machine (e.g. developing a python app for windows, most python apps on linux, so they would use a windows VM)
+-	The developer can still use their favourite editor, IDE, and browser
+-	It depends on an external hypervisor, such as: virtualBox, Hyper-V, VMware
+-	Vagrant calls the hypervisor a provider
+Vagrant can mirror a folder between the VM and the home OS, so you can work on your home OS but then you can test it in the VM. Therefore, the developer gets to use their preferred programs.
+
+For each project going forward we will use vagrant.
+
+Installation
+Vagrant can run on all major operating systems and architectures
+Need a hypervisor installed on machine
+Once installed you can test it by opening a terminal (command prompt) and typing:
+vagrant             (this bring up the help)
+mkdir project_vagrant1       (making a directory can do in git bash)
+cd project_vagrant1             (changes to the project directory)
+vagrant init hashicorp/bionic64               (vagrant makes a new vagrant file, init initialises it, bionic64 is the name for ubuntu 18,   64 means the architecture it uses will be 64, hashicorp is who made bionic, this means you can change it out to a new company with a new file.)
+discover vagrant boxes, this lets you download new vagrant images which are referred to as boxes.
+notepad Vagrantfile     (for windows)
+cat Vagrantfile             (for linux)
+The above commands have the setup commands within,
+Vagrantup              downloads the image, once downloaded it can just copy for future setups
+A new machine should have been created in you hypervisor
+Vagrant ssh                      (now we are inside the virtual machine)
+vagrant@vagrant:~$ pwd      (we are in the vritual machine ubuntu so it take linux commands
+/home/vagrant
+
+vagrant@vagrant:~$ la -la
+total 40
+drwxr-xr-x 5 vagrant vagrant 4096 Aug 15  2019 .
+drwxr-xr-x 3 root    root    4096 Aug 15  2019 ..
+-rw-r--r-- 1 vagrant vagrant  220 Aug 15  2019 .bash_logout
+-rw-r--r-- 1 vagrant vagrant 3771 Aug 15  2019 .bashrc
+drwx------ 2 vagrant vagrant 4096 Aug 15  2019 .cache
+drwx------ 3 vagrant vagrant 4096 Aug 15  2019 .gnupg
+-rw-r--r-- 1 vagrant vagrant  807 Aug 15  2019 .profile
+drwx------ 2 vagrant root    4096 Aug 26 09:44 .ssh
+-rw-r--r-- 1 vagrant vagrant    0 Aug 15  2019 .sudo_as_admin_successful
+-rw-r--r-- 1 vagrant vagrant    6 Aug 15  2019 .vbox_version
+-rw-r--r-- 1 root    root     180 Aug 15  2019 .wget-hsts
+vagrant@vagrant:~$ ls /vagrant/
+Vagrantfile
+
+Touch /vagrant/test.py        (create a test file in vagrant directory in VM)
+exit           (leave the VM)
+In normal not vm terminal
+Chang directory to project file directory
+Test file should appear there.
+Here you can edot the file.
+i.e
+cd\Users\D.P\project_vagrant1
+python [file name].py       (runs the file
+notepad [filename].py  edits the file in notepad
+now you should be in vagrant file in you windows machine
+
+
+How to stop the machine
+Can double cling the vm in the hypervisor to work in the terminal
+To stop the environment
+vagrant halt                   (stops the VM from running)
+vagrant up            (boots the vm up)
+rm .vagrant           (removes the image to be reinstalled if you have problems with vagrant up keeps all the files)
+rm -rf .vagrant        (same commands but for linux)
+
+
+to install on the vagrant file
+type
+notepad Vagrantfile
+got to the end where you see
+#config.vm.provision "shell", inline: <<-SHELL                   (provision the vm through shell, so start shell, the commands will be done in a shell)
+     #apt-get update
+     #apt-get install -y apache 2
+
+   #SHELL                  (ends the shell)
+Un hash them and run or add in more modules to install and they will already be on your virtual machine
+Then run
+vagrant up          (all the new packages should be installed on your virtual machine)
+
+provisioner in this is SHELL,
+
+ERRORS
+Headless frontend error – to fix go into task manager, find the Virtualbox headless frontend in processes in task manager. Then end the task and vagrant up should work.  Or you can close you running virtual box app before you do vagrant halt. Then when you do vagrant up it should work as well.
+
+
+Container- docker
+This will be done on the ubuntu virtual machine
+
+What is a container?
+-	Creates abstraction at an OS level that allows individual, modular, and distinct functionality of the app to run independently
+-	It shares resources with the host OS
+-	Several isolated workloads – the containers – can co-exist on a machine
+-	It is a group of isolated processes
+-	A unit of software that is lightweight but still bundles the code, its dependencies, and the configuration altogether into a single image
+-	Shares same kernel of the OS but the configuration is different
+-	Where can we run containers? , on bare metal servers, on top hypervisors, in cliud infrastructure
+
+
+The container unlike a hypervisor does not require a guest OS to run on. Instead you have a container engine that runs individual containers, each container accesses the kernel of the host OS. Infrastructure > Host OS > Container engine > containers
+In the containers there contains Bins/Libraries and the App. One app per container.
+
+Benefits of containers:
+-	Useful in developing, deploying, and testing modern distributed apps and microservices that can operate in isolated execution environments on same host machines
+-	Developers don’t need to write application code into different VMs operating different app components to retrieve compute, storage, and networking resources.
+-	A complete application component can be executed I its entirety within its isolated environment without affecting other app components or software
+-	Conflicts within libraries or app components do not occur during execution and the application container can move between the cloud or data center instances efficiently
+Security:
+-	In 2018, 60% of organisations suffered a security incident specific to containers, according to trip wire.
+-	This is because malware can escape isolation and get access to the host and the other containers, since the containers share the kernel.
+-	They are not entirely isolated like the VMs
+Containers must be the same type as the host OS. i.e. Linux containers on Linux machines etc…
+Docker
+This is a provider of containers. Windows allows people to run linux containers on a windows machine if you have downloaded the linux kernel. Meaning you run the containers of the Linux kernel.
+Docker is and open platform for developing, shipping, and running applications
+It enables separation of an application from the infrastructure
+
+You interact with the docker daemon through the client Docker CLI (command line interface)
+The image is what we create(the template of the container) so you create an image for your app, the user will then download the image and create a container from this image.
+Docker demo
+Follow installation commands on the docker website to install
+Do
+sudo docker run hello-world
+this is just a check it pulls the image from online to run.
+Docker needs root access to the kernel
+The command to add the user to the docker group
+sudo usermod -aG docker $USER
+
+usermod  (user modification)
+-aG  [the group to add to]   [user]       (add group)
+
+docker run -it ubuntu bash                       This create a container, run want to run a container, -it allows for an interactive terminal for a container, ubuntu name of image you want to start, bash is the command you execute in the container once it is up
+root@4f5aabcb7c3b:/#             bold is the container name
+uname -a                  info on terminal running (shows kernel etc)
+
+sudo apt install net-tools                               (instal some net tools)
+ifconfig                                        network interface command, list of all network interfaces
+
+For containers need to install packages separately to the host
+top                       (checks the memory usage)
+docker ps                            (in the main terminal shows running containers)
+docker images                     (gives images saved on the machine)
+docker kill [id or name]             (gets rid of the container)
+docker stop [id or name]           (stops the container running, you can js=just use the first 3 digits of the container id as well)
+
+The difference between stop and kill is that when you stop it, it sends a signal to the main process of the container to be shut down. Whilst kill gives no grace period to finish its processes.
+Docker ps -a                (all containers to date)
+You don’t think of containers in a way that you should stop it then run it again. Instead they are disposable, information/data should not be stored in the container. The container is stateless.
+
+Docker start [container id]         open up a acontainer
+Docker exec -it [id] bash            (opens up the container)
+docker rm [id or name]             (remove the container, make sure to kill before doing this you cannot remove a running container)
+
+
+
+
+
+
+How to add stuff to docker.com.
