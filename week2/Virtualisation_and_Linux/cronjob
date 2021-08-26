@@ -1,0 +1,2 @@
+* * * * *    ~/shellexcersize3.sh
+* * * * *    ( sleep 30 ; ~/shellexcersize3.sh)
