@@ -1,0 +1,242 @@
+NETWORKING BASICS AND ADDRESSING
+
+Networking Basics
+
+Network components:
+-	Hosts (any device connected to the network, PC, Server, etc)
+-	Peer-to-peer (No host, so no server, the 2 peers provide or use a service from the other)
+-	Intermediary Devices (router a switch a firewall, a device added to the network for a service)
+-	Network media (ethernet cable, the media you use to exchange the data)
+
+
+Network infrastructure types
+
+LAN (local area network) – small space coverage i.e a building
+WAN (wide area network) – bunch of interconnected LAN which forms a WAN, usually have a third party providing you a service, sometimes you don’t have that i.e a wireless WAN connection between two cities for a company.
+Intranet – Company only  (private connections which belong to the organisations)(2 private networks connected to each other over a secure connection is a intranet, exclusive use)(can be LAN or WAN)
+Extranet – Suppliers, Customers, Collaborators (It’s a private network that you give privileged access to) (e.g the NHS, the NHS manages the NHS trust, the NHS has its own network however it gives some access to the NHS trust. So the NHS trust gets a certain level of access but not all of it)
+Internet – The world (the word comes from comes from internetworks, the inter working of all the networks in the world, the web is one of the services provided on the internet. The infrastructure connecting all the networks in the world)
+
+Communication fundamentals
+-	Messages source(sender): Message sources are people, or electronic devices, that need to send a message to other individuals or devices
+-	Message destination(receiver): The destination receives the message and interprets it
+-	Channel: this consists of the media that provides the pathway over which the message travels from source to destination
+Message delivery options
+Three types of options:
+Unicast – transmitted to just one end device     (can be heard by other people if not protected it still counts as a unicast)(only one person should react to this)
+Multicast – transmitted the message to multiple specified end points
+Broadcast – Send the message to everyone on the network (all end devices)
+
+Protocol suites (ISO suites)
+
+The layers all rely on different services, this model was developed in 1977 (international organisation for standardisation)
+1.	Physical, (media, signal, and binary transmission) everything related to the transmission media, all physical things on this level, develop media components without worrying if the other layers will accept. All the physical and electrical specification of the devices, e.g wifi is here.
+2.	Data link, physical addressing, the connector e.g., how you connect your ethernet cables to your PC and the type of connector to use. Exchange the data on the physical layer, this is the protocol to do that. How to transmit data over the transmission media is in the data link.
+3.	Network, path destination and logical addressing, does 2 main things: the addressing is independent of the data link and physical layer you have an IP address regardless of how you are connecting. This layer gives the IP address. The second is the routing, how to get the data to the IP address or receive data from an IP address. Finding another IP address. Doesn’t care if information is delivered or not.
+4.	Transport, End-to-end connections and reliability. This layer cares about if the data was delivered or not. It checks if the information has been delivered or not. (TCP (transport control protocol) packet you send an acknowledgement you got it and nothing is lost, this provides a reliable connection) (UDP (user datagram protocol) don’t care if data is delivered or not, offers speed, and you  know if you are connected or not, don’t care if you drop a packet you won’t notice it). Whether you encrypt or not SSL
+5.	Session, interhost communication, takes care of the session itself, how to manage your sessions, e.g. 2 streams running at the same time
+6.	Presentation, Data representation and encryption, what is the data encoding you are using, file types etc.
+7.	Application, Network process to application, the application protocol you are using, HTTP, SSH, email, FTP
+
+In real life you have application layer which is comprised of 5,6,7
+
+There is another model, TCP/ IP protocol suite, this is the one we use in real life
+
+
+Only have 4 layers:
+-	Network access layer, protocaols used regarding the network connections to your machine
+-	Internet layer, same functionality as network layer
+-	Transport layer, same as in osi model (TCP and UDP)
+-	Application layer, the 5,6,7 layer
+The tcp/ ip protocol only has the last three layers in them, so not the network access layer
+
+Comparing them:
+
+
+The OSI model does not have a real life implementation in the world, we use the TCP / IP protocol model, The OSI model gives the functions on each layer, mostly in interview you will be asked about the OSI model not the TCP model.
+
+Encapsulation
+What happens when you send the data.
+
+Data layer, You write the email, this is comprised of data, this data is split into several packets if it is too large for one. The packets are sent individually.
+The packet moves to the transport layer, this is where is gets assigned TCP or UDP protocol, this is called the transport header and it is added in front of the packet.  This is sent to the next layer
+This is the network layer( or internet layer) the network header is added on the front, this is the IP addresses for the source and destination. This figures out the route to send the data and how to send it.  This moved onto the data link layer
+The datalink layer (or network access layer) This adds a frame header and a frame trailer. This medium dependant. This is the data that is used on the local network, the data needed to transmit the data over Wi-Fi or ethernet etc. Don’t care abut network you are connected too until this point.
+This sent to the next layer where it is sent as bits to the receiver/destination. On the other side you do the steps but in reverse. So each layer it takes off its own header and sends it up.  The data layer compiles the packets as they are sent.
+
+Transport layer
+TCP (transmission control protocol)
+Client sends 3 packets out of 6
+The server sends back a response of the 3 packets it has received
+Client sends out the next 3
+They get dropped
+If the source does not receive confirmation it resends the packets
+
+
+If the sender sends 1,2,3,4,5,6
+But the receiver gets 1,2,3,4,6
+Then the response sent will say it received only 1,2,3,4
+Number 5,6 will be resent
+
+This is because it is treated as a series, so the source will resend from the last confirmation it got from the receiver.
+
+UDP (User Datagram Protocol)
+Source sends the files doesn’t wait for any confirmation so all packets are sent.
+
+When to use what?
+
+
+We use UDP for DNS (domain name resolution) and VoIP (IP telephony) since it is: fast, low overhead, does not require acknowledgment, does not resend lost data, delivers as it arrives. This is because you do not require a lot of packets to send. The lost data doesn’t matter or is noticeable.
+
+We use TCP for things like SMTP/IMAP (email) and HTTP/HTTPS (world wide web) since it is: reliable, acknowledges data, resends lost data and delivers data in sequenced order. You need all the data as is so all data is needed. Sequenced packets means they should be able to be rearranged in the order sent.
+
+Port Numbers
+These manage the incoming information. So you can send an email whilst browsing the web and streaming a video. E.g. the port numbers are connected to a tab in chrome so all info coming through it goes to that tab. The source has a port, and the destination has a port. The server decides which of its ports it’s listening to but the client should also define the port it should send it to. The client does this by use of the default port numbers for the protocol it’s using. To protect your servers you can change the ports from the default ones then the public have no clue which port is open and they have to find the port to use on the server.
+-	The TCP and UDP transport layer protocols use port numbers to manage multiple, simultaneous conversations
+-	Destination port number is associated with the destination application on the server host
+-	Source port number is associated with the originating application on the user’s host.
+-	A server can offer more than one service simultaneously such as: SSH service on port 22, Web service on port 80 , file transfer protocol (FTP0 on port 21
+-	Source port number acts as a return address for the requesting application
+
+
+65,535 is the highest value in a 16 bit value, you have 2 bytes which are each 8 bits, which is 16 bits therefore 2^16 is 65535. These are all port numbers we can use.
+-	Well-known ports, 0 – 1023 are reserved for common or popular services and applications such as: web browsers, email clients, and remote access clients
+-	Registered ports, 1024 – 49151 Assigned by IANA to a requesting entity to use with specific processes or applications
+-	Private and/or Dynamic Ports, 49151 – 65535 These ports are known as ephemeral ports. The client’s OS usually assign port numbers dynamically when a connection to a service is initiated. So, these are assigned for short processes then closed when finished. So the port is used then stopped so it can be used for another service or application.
+The other standard is:
+
+
+It is the same except that there are no registered ports, anything over 1023 are all ephemeral ports.
+Well known ports
+
+The well-known ports are only used on the server, for the client you use the ephemeral ports.
+
+The bandwidth
+
+This is the speed of data transmission
+
+Because if you use the same port on the client then you cannot open up multiple tabs on the client side, because ephemeral allows for allocation to a specific tab. If all traffic goes through 443 you cannot resolve it on the client side.
+
+
+Addressing Standards
+Ports are used as a means of addressing for applications.
+
+
+Positional numeral system:
+-	A positional numeral system/notation is the system used to write/express a number
+-	Positional notation means that adigit represents different values depending on the position the digit occupies in the sequence of numbers
+-	In networking we use three numeral systems: decimal numeral system (base 10) , Binary Numeral system (base 2), Hexadecimal numeral system (base 16)
+
+
+
+
+
+
+
+
+
+Data Link addressing
+This is the 2nd layer in the OSI model
+-	Addressing on this layer is done using what is known as: Media Access Control (MAC) address
+-	A MAC address is global-wide unique address that is comes with the network interface card (NIC). It was mainly given to the NIC when it is manufactures
+-	Also known as, hardwired, hard-coded, fixed or physcial address
+-	It’s formed out of 48 bits,written as 12-digit colon-hexadecimal number (equal to 6 bytes/octets) (a byte is 8 bits)
+-	Example 02:42:90:E1:B4:8C
+
+-	A MAC addresses are just like serial numbers
+-	They are unique
+-	The address isn’t routable, they are just serial numbers nothing more
+-	Used in communication between two hosts on the same direct network (the MAC address will not leave your network .E.g. exposed to the internet)
+-	No direct mathematical method to find out whether two MAC addresses are on the same network or not.
+-	MAC addresses are read-only not changeable or modifiable (on the NIC)
+-	However you can get around this by configuring your OS to use a different MAC address
+Structure of the MAC address
+-	Consists of two parts:
+-	- First 6 digits identifies the manufacturer, called as OUT (Organisational Unique Identifier)
+-	- The second 6 digits identifies the device itself
+
+To find the MAC address
+Use the command ipconfig to show the cards to see the mac addresses use ipconfig /all
+It will be listed under physical address
+On linux and MAC use ifconfig
+Vm ware has it’s own virtual network interface cards with their own MAC addresses
+
+Or using the graphical interface click on the network icon
+Go to network and internet settings
+Then go to properties and it will be there
+
+Network (3rd layer) addressing
+-	Internet protocol (Ip) address is the address used to identify a host on any TCP/IP network. IP address is part of IP protocol in network layer
+-	There are currently 2 versions of IP addressing: IPv4 and IPv6
+
+
+IPv4:
+-	Is a series of 1 and o
+-	A series of bits is difficult to manage, so they are used in decimal format
+-	All network devices use binary IPv4 addressing to identify each other
+-	An IPv4 address consists of a string of 32 bits, divided into four sections called octets. Each octet contains 8 bits(or 1 byte) separated with a dot
+
+
+
+
+-	They are routable, we can find out whether two IP addresses belong to the same network or not
+-	An IPv4 address is a 32-bit hierarchical address that is made up of: a network portion and a host portion
+-	When determining the network portion versus the host portion, you must look at the 32 bit stream
+-	There are two systems to recognise the network portion from the host portion: legacy classful addressing  and classless (subnet-based system)
+In classful addressing there are 3 types of addresses:
+-	Class a  if Ip starts with 0 it’s a class a this means first octet between 0-127. If both Ip addresses have the same first octet they are on the same network. First octet is the network IP
+-	Class b if Ip starts with 10 it’s class b, 128-191 first octet. The first 2 octets are the network idd
+-	Class c  if IP starts with 110 class c 192 -223, the network ID is the first 3 octets
+-	Class d if IP starts with 1110 class d 224 -239, is used for multicast. This is used to send one packet to a group of people, so assign those people this address, and they will receive the multicast.
+-	Class e if IP starts with 1111 class e 240 -255, experimental address space, not used at all.
+
+
+If the 2 IP are on the same network they must have the same first octet. When taking a network the first and last address on the network we do not use it for anything. When host portion is all zero that is the network ID. If the host id is 255.255.255 then this is the broadcast, and is used if you want to send something to everyone.
+These are legacy because we do not use it anymore. For 2 reasons do not have enough networks. There is another reason, we are wasting a lot of Ip addresses, for e.g accompany with just 5 Ip so you get assigned a class c address, and you have 256 ip assigned to you wasting a vast majority of them.
+
+
+
+SUBNET MASK
+
+
+
+Break the octet into bits and manipulate it. Have another value and call it the subnet mask, whenever we find a 1 this is a network portion 0 represents the Host portion. So 2 IP are in the same network if they have the same subnet portion.
+
+Typo class a starts at 0
+This is mapping the subnet mask to the old classful IP addresses.
+Subnet mask:
+-	Assigning an IPv4 address to a host requires the following: the IPv4 address (this is the unique IPv4 address of the host) and the subnet mask (this is used to identify the network/host portion of the IPv4 address.
+-	A subnet mask is used to differentiate the network portion from the host portion.
+-	When an IPv4 address is assigned to a device, the subnet mask is used to determine the network address of the device.
+-	The network address represents all the devices on the same network.
+
+The 1s are altogether followed by the 0s
+
+
+Determining the network: logical AND
+1 AND 1 = 1
+0 AND 1 = 0
+1 AND 0 = 0
+0 AND 0 = 0
+In digital logic, 1 represents true and 0 false
+
+
+Do an AND between the IP and the subnet mask, the result is the network IP. The network IP is the first IP in the system where the HOST portion is all zeros, there fore this works since it sets all the host portion to zero.
+
+
+
+You can simplify the sub net mask by writing /24 this is the amount of 1s in the subnet mask in a row.
+Classless Inter-domain routing (CIDR)
+-	Cidr can be considered as another method to write subnet macks
+-	Cidr valueis the number of 1’s in a subnet mask
+-	Cidr value is the how many bits represent the network portion in an IP
+
+There are special addresses in IPv4
+
+
+Loop back addresses  127.0.0.0 starts with 127. used by the local host, every host considers themselves as 127. The subnet mask is 255.0.0.0 or /8. The PC thinks it is them. It’s an internal pointer to the same computer.
+Link-local address   169.254.0.0  subnet 255.255.0.0 /16. Automatic private Ip addressing (APIPA). If the PC cannot find a dynamic IP address or doesn’t have a static one.  So the computer assigns itself an IP on the network from this range.
+Private IP address   10.0.0.0     255.0.0.0 /8
+                                   172.16.0.0 -> 172.31.0.0                         255.240.0.0    /12
+                                   192.168.0.0 -> 192.168.255.0                255.255.0.0         /16
+These can never be on the public network, they are used in order to address you own private network. Everyone has these addresses inside the network.
